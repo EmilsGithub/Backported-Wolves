@@ -1,9 +1,10 @@
 package net.emilsg.backported_wolves.tags;
 
 import net.emilsg.backported_wolves.BackportedWolves;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.biome.Biome;
 
 public class ModBiomeTags {
@@ -19,6 +20,6 @@ public class ModBiomeTags {
 
 
     private static TagKey<Biome> create(String namespace, String path) {
-        return TagKey.of(RegistryKeys.BIOME, new Identifier(namespace, path));
+        return TagKey.of(Registry.BIOME_KEY, new Identifier(namespace, path));
     }
 }
