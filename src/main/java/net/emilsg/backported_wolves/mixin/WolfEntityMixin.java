@@ -53,7 +53,7 @@ public abstract class WolfEntityMixin extends MobEntityMixin {
     @Override
     protected void onInitialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityNbt, CallbackInfoReturnable<EntityData> cir) {
         WolfEntity wolfEntity = (WolfEntity) (Object) this;
-        Optional<RegistryKey<Biome>> biomeKey = world.getBiomeKey(wolfEntity.getBlockPos());
+        Optional<RegistryKey<Biome>> biomeKey = world.getBiome(wolfEntity.getBlockPos()).getKey();
         WolfEntityVariant variant = WolfEntityVariant.PALE_WOLF;
 
         if(biomeKey.equals(Optional.of(FOREST))) {
