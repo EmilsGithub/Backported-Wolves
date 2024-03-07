@@ -3,15 +3,15 @@
 	"id": "backported_wolves",
 	"version": "${version}",
 	"name": "Backported Wolves",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Backports the wolf variants from the latest version to older versions of the game.",
 	"authors": [
-		"Me!"
+		"EmilSG"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/backported-wolves",
+		"sources": "https://github.com/EmilsGithub/Backported-Wolves"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/backported_wolves/icon.png",
 	"environment": "*",
 	"entrypoints": {
