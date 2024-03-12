@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 
 public class ModBiomeTags {
-    //public static final TagKey<Biome> SPAWNS_PALE_WOLF = create(BackportedWolves.MOD_ID, "spawns_pale_wolf");
+    public static final TagKey<Biome> SPAWNS_PALE_WOLF = create(BackportedWolves.MOD_ID, "spawns_pale_wolf");
     public static final TagKey<Biome> SPAWNS_WOODS_WOLF = create(BackportedWolves.MOD_ID, "spawns_woods_wolf");
     public static final TagKey<Biome> SPAWNS_ASHEN_WOLF = create(BackportedWolves.MOD_ID, "spawns_ashen_wolf");
     public static final TagKey<Biome> SPAWNS_BLACK_WOLF = create(BackportedWolves.MOD_ID, "spawns_black_wolf");

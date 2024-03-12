@@ -16,14 +16,13 @@ public enum WolfEntityVariant implements StringIdentifiable {
     STRIPED_WOLF(7, "striped"),
     SNOWY_WOLF(8, "snowy");
 
-    private static final WolfEntityVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.
-            comparingInt(WolfEntityVariant::getId)).toArray(WolfEntityVariant[]::new);
+    private static final WolfEntityVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(WolfEntityVariant::getId)).toArray(WolfEntityVariant[]::new);
     private final int id;
-    private final String name_string;
+    private final String nameString;
 
-    WolfEntityVariant(int id, String name_string) {
+    WolfEntityVariant(int id, String nameString) {
         this.id = id;
-        this.name_string = name_string;
+        this.nameString = nameString;
     }
 
     public int getId() {
@@ -36,6 +35,6 @@ public enum WolfEntityVariant implements StringIdentifiable {
 
     @Override
     public String asString() {
-        return name_string;
+        return nameString;
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -15,13 +16,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class WolfEntityRendererMixin {
     private static final String BASE_PATH = "textures/entity/wolf/wolf";
 
+    @Unique
     private Identifier getCustomTextureForVariant(int variant, WolfEntity wolfEntity) {
         String texture = BASE_PATH + "_" + WolfEntityVariant.byId(variant).asString();
 
         if (wolfEntity.isTamed()){
             texture += "_tame";
-        }
-        else if (wolfEntity.hasAngerTime()){
+        } else if (wolfEntity.hasAngerTime()){
             texture += "_angry";
         }
 
@@ -35,7 +36,7 @@ public class WolfEntityRendererMixin {
 
         if (compound.contains("Variant")) {
             int wolfVariant = compound.getInt("Variant");
-            if (wolfVariant == 0){
+            if (wolfVariant == 0 || wolfVariant >= 9){
                 return;
             }
             Identifier customTexture = getCustomTextureForVariant(wolfVariant, wolfEntity);
