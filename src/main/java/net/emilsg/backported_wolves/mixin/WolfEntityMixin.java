@@ -2,6 +2,7 @@ package net.emilsg.backported_wolves.mixin;
 
 import net.emilsg.backported_wolves.tags.ModBiomeTags;
 import net.emilsg.backported_wolves.variant.WolfEntityVariant;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.data.DataTracker;
@@ -11,11 +12,17 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.tag.Tag;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.biome.source.BiomeAccess;
+import net.minecraft.world.biome.source.BiomeSource;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -53,28 +60,33 @@ public abstract class WolfEntityMixin extends MobEntityMixin {
     @Override
     protected void onInitialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityNbt, CallbackInfoReturnable<EntityData> cir) {
         WolfEntity wolfEntity = (WolfEntity) (Object) this;
-        Optional<RegistryKey<Biome>> biomeKey = world.getBiomeKey(wolfEntity.getBlockPos());
-        WolfEntityVariant variant = WolfEntityVariant.PALE_WOLF;
+        Biome biome = world.getBiome(wolfEntity.getBlockPos());
+        WolfEntityVariant variant = WolfEntityVariant.byId(WolfEntityVariant.PALE_WOLF.getId());
 
-        if(biomeKey.equals(Optional.of(FOREST))) {
+        if(isBiomeInTag(ModBiomeTags.SPAWNS_WOODS_WOLF, biome)) {
             variant = WolfEntityVariant.WOODS_WOLF;
-        } else if(biomeKey.equals(Optional.of(SNOWY_TAIGA))) {
+        } else if(isBiomeInTag(ModBiomeTags.SPAWNS_ASHEN_WOLF, biome)) {
             variant = WolfEntityVariant.ASHEN_WOLF;
-        } else if(biomeKey.equals(Optional.of(OLD_GROWTH_PINE_TAIGA))) {
+        } else if(isBiomeInTag(ModBiomeTags.SPAWNS_BLACK_WOLF, biome)) {
             variant = WolfEntityVariant.BLACK_WOLF;
-        } else if(biomeKey.equals(Optional.of(OLD_GROWTH_SPRUCE_TAIGA))) {
+        } else if(isBiomeInTag(ModBiomeTags.SPAWNS_CHESTNUT_WOLF, biome)) {
             variant = WolfEntityVariant.CHESTNUT_WOLF;
-        } else if(biomeKey.equals(Optional.of(SPARSE_JUNGLE))) {
+        } else if(isBiomeInTag(ModBiomeTags.SPAWNS_RUSTY_WOLF, biome)) {
             variant = WolfEntityVariant.RUSTY_WOLF;
-        } else if(biomeKey.equals(Optional.of(SAVANNA_PLATEAU))) {
+        } else if(isBiomeInTag(ModBiomeTags.SPAWNS_SPOTTED_WOLF, biome)) {
             variant = WolfEntityVariant.SPOTTED_WOLF;
-        } else if(biomeKey.equals(Optional.of(WOODED_BADLANDS))) {
+        } else if(isBiomeInTag(ModBiomeTags.SPAWNS_STRIPED_WOLF, biome)) {
             variant = WolfEntityVariant.STRIPED_WOLF;
-        } else if(biomeKey.equals(Optional.of(GROVE))) {
+        } else if(isBiomeInTag(ModBiomeTags.SPAWNS_SNOWY_WOLF, biome)) {
             variant = WolfEntityVariant.SNOWY_WOLF;
         }
 
         this.setVariant(variant);
+    }
+
+    @Unique
+    public boolean isBiomeInTag(Tag.Identified<Biome> biomeTag, Biome biome) {
+        return biomeTag.values().contains(biome);
     }
 
     @Inject(

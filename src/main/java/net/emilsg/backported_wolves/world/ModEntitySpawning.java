@@ -1,20 +1,59 @@
 package net.emilsg.backported_wolves.world;
 
 import net.emilsg.backported_wolves.BackportedWolves;
+import net.emilsg.backported_wolves.config.BackportedWolvesConfig;
 import net.emilsg.backported_wolves.tags.ModBiomeTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.SpawnSettings;
 
 public class ModEntitySpawning {
 
-    public static void addSpawns() {
+    public static void addAndRemoveSpawns() {
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SAVANNA_PLATEAU), SpawnGroup.CREATURE, EntityType.WOLF, 8, 4, 8);
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WOODED_BADLANDS), SpawnGroup.CREATURE, EntityType.WOLF, 8, 4, 8);
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SPARSE_JUNGLE), SpawnGroup.CREATURE, EntityType.WOLF, 8, 2, 4);
+        int spawnWeight = BackportedWolvesConfig.getInstance().getInteger(BackportedWolvesConfig.SPAWN_WEIGHT);
+
+        SpawnSettings.SpawnEntry fourFour = new SpawnSettings.SpawnEntry(EntityType.WOLF, spawnWeight, 4, 4);
+        SpawnSettings.SpawnEntry twoFour = new SpawnSettings.SpawnEntry(EntityType.WOLF, spawnWeight, 2, 4);
+        SpawnSettings.SpawnEntry fourEight = new SpawnSettings.SpawnEntry(EntityType.WOLF, spawnWeight, 4, 8);
+        SpawnSettings.SpawnEntry one = new SpawnSettings.SpawnEntry(EntityType.WOLF, spawnWeight, 1, 1);
+
+        BiomeModifications
+                .create(new Identifier(BackportedWolves.MOD_ID, "change_wolves"))
+                .add(ModificationPhase.REMOVALS, biomeSelectionContext -> true,
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings().removeSpawnsOfEntityType(EntityType.WOLF)
+                )
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_PALE_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, fourFour))
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_WOODS_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, fourFour))
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_ASHEN_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, fourFour))
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_BLACK_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, twoFour))
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_CHESTNUT_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, twoFour))
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_RUSTY_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, twoFour))
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_SPOTTED_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, fourEight))
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_STRIPED_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, fourEight))
+                .add(ModificationPhase.REPLACEMENTS, biomeSelectionContext -> ModBiomeTags.SPAWNS_SNOWY_WOLF.contains(biomeSelectionContext.getBiome()),
+                        (biomeSelectionContext, biomeModificationContext) -> biomeModificationContext.getSpawnSettings()
+                                .addSpawn(SpawnGroup.CREATURE, one)
+                );
 
         BackportedWolves.LOGGER.info(BackportedWolves.MOD_ID + " registered wolf spawns successfully.");
     }
