@@ -1,5 +1,6 @@
 package net.emilsg.backported_wolves;
 
+import net.emilsg.backported_wolves.config.BackportedWolvesConfig;
 import net.emilsg.backported_wolves.world.ModEntitySpawning;
 import net.fabricmc.api.ModInitializer;
 
@@ -12,6 +13,7 @@ public class BackportedWolves implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ModEntitySpawning.addSpawns();
+		BackportedWolvesConfig.init();
+		ModEntitySpawning.addAndRemoveSpawns();
 	}
 }
