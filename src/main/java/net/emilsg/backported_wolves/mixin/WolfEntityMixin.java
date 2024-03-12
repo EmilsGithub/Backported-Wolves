@@ -11,6 +11,7 @@ import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -53,24 +54,24 @@ public abstract class WolfEntityMixin extends MobEntityMixin {
     @Override
     protected void onInitialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, EntityData entityData, NbtCompound entityNbt, CallbackInfoReturnable<EntityData> cir) {
         WolfEntity wolfEntity = (WolfEntity) (Object) this;
-        Optional<RegistryKey<Biome>> biomeKey = world.getBiome(wolfEntity.getBlockPos()).getKey();
-        WolfEntityVariant variant = WolfEntityVariant.PALE_WOLF;
+        RegistryEntry<Biome> registryEntry = world.getBiome(wolfEntity.getBlockPos());
+        WolfEntityVariant variant = WolfEntityVariant.byId(WolfEntityVariant.PALE_WOLF.getId());
 
-        if(biomeKey.equals(Optional.of(FOREST))) {
+        if(registryEntry.isIn(ModBiomeTags.SPAWNS_WOODS_WOLF)) {
             variant = WolfEntityVariant.WOODS_WOLF;
-        } else if(biomeKey.equals(Optional.of(SNOWY_TAIGA))) {
+        } else if(registryEntry.isIn(ModBiomeTags.SPAWNS_ASHEN_WOLF)) {
             variant = WolfEntityVariant.ASHEN_WOLF;
-        } else if(biomeKey.equals(Optional.of(OLD_GROWTH_PINE_TAIGA))) {
+        } else if(registryEntry.isIn(ModBiomeTags.SPAWNS_BLACK_WOLF)) {
             variant = WolfEntityVariant.BLACK_WOLF;
-        } else if(biomeKey.equals(Optional.of(OLD_GROWTH_SPRUCE_TAIGA))) {
+        } else if(registryEntry.isIn(ModBiomeTags.SPAWNS_CHESTNUT_WOLF)) {
             variant = WolfEntityVariant.CHESTNUT_WOLF;
-        } else if(biomeKey.equals(Optional.of(SPARSE_JUNGLE))) {
+        } else if(registryEntry.isIn(ModBiomeTags.SPAWNS_RUSTY_WOLF)) {
             variant = WolfEntityVariant.RUSTY_WOLF;
-        } else if(biomeKey.equals(Optional.of(SAVANNA_PLATEAU))) {
+        } else if(registryEntry.isIn(ModBiomeTags.SPAWNS_SPOTTED_WOLF)) {
             variant = WolfEntityVariant.SPOTTED_WOLF;
-        } else if(biomeKey.equals(Optional.of(WOODED_BADLANDS))) {
+        } else if(registryEntry.isIn(ModBiomeTags.SPAWNS_STRIPED_WOLF)) {
             variant = WolfEntityVariant.STRIPED_WOLF;
-        } else if(biomeKey.equals(Optional.of(GROVE))) {
+        } else if(registryEntry.isIn(ModBiomeTags.SPAWNS_SNOWY_WOLF)) {
             variant = WolfEntityVariant.SNOWY_WOLF;
         }
 
