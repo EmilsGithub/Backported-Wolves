@@ -1,0 +1,296 @@
+{
+  "angry_panting": {
+    "subtitle": "subtitles.entity.wolf.pant",
+    "sounds": [
+      "backported_wolves:wolf/angry/panting"
+    ]
+  },
+  "big_panting": {
+    "subtitle": "subtitles.entity.wolf.pant",
+    "sounds": [
+      "backported_wolves:wolf/big/panting"
+    ]
+  },
+  "classic_panting": {
+    "subtitle": "subtitles.entity.wolf.pant",
+    "sounds": [
+      "backported_wolves:wolf/classic/panting"
+    ]
+  },
+  "cute_panting": {
+    "subtitle": "subtitles.entity.wolf.pant",
+    "sounds": [
+      "backported_wolves:wolf/cute/panting"
+    ]
+  },
+  "grumpy_panting": {
+    "subtitle": "subtitles.entity.wolf.pant",
+    "sounds": [
+      "backported_wolves:wolf/grumpy/panting"
+    ]
+  },
+  "puglin_panting": {
+    "subtitle": "subtitles.entity.wolf.pant",
+    "sounds": [
+      "backported_wolves:wolf/puglin/panting"
+    ]
+  },
+  "sad_panting": {
+    "subtitle": "subtitles.entity.wolf.pant",
+    "sounds": [
+      "backported_wolves:wolf/sad/panting"
+    ]
+  },
+  "angry_bark": {
+    "subtitle": "subtitles.entity.wolf.bark",
+    "sounds": [
+      "backported_wolves:wolf/angry/bark1",
+      "backported_wolves:wolf/angry/bark2",
+      "backported_wolves:wolf/angry/bark3"
+    ]
+  },
+  "big_bark": {
+    "subtitle": "subtitles.entity.wolf.bark",
+    "sounds": [
+      "backported_wolves:wolf/big/bark1",
+      "backported_wolves:wolf/big/bark2",
+      "backported_wolves:wolf/big/bark3"
+    ]
+  },
+  "classic_bark": {
+    "subtitle": "subtitles.entity.wolf.bark",
+    "sounds": [
+      "backported_wolves:wolf/classic/bark1",
+      "backported_wolves:wolf/classic/bark2",
+      "backported_wolves:wolf/classic/bark3"
+    ]
+  },
+  "cute_bark": {
+    "subtitle": "subtitles.entity.wolf.bark",
+    "sounds": [
+      "backported_wolves:wolf/cute/bark1",
+      "backported_wolves:wolf/cute/bark2",
+      "backported_wolves:wolf/cute/bark3"
+    ]
+  },
+  "grumpy_bark": {
+    "subtitle": "subtitles.entity.wolf.bark",
+    "sounds": [
+      "backported_wolves:wolf/grumpy/bark1",
+      "backported_wolves:wolf/grumpy/bark2",
+      "backported_wolves:wolf/grumpy/bark3"
+    ]
+  },
+  "puglin_bark": {
+    "subtitle": "subtitles.entity.wolf.bark",
+    "sounds": [
+      "backported_wolves:wolf/puglin/bark1",
+      "backported_wolves:wolf/puglin/bark2",
+      "backported_wolves:wolf/puglin/bark3"
+    ]
+  },
+  "sad_bark": {
+    "subtitle": "subtitles.entity.wolf.bark",
+    "sounds": [
+      "backported_wolves:wolf/sad/bark1",
+      "backported_wolves:wolf/sad/bark2",
+      "backported_wolves:wolf/sad/bark3"
+    ]
+  },
+  "angry_death": {
+    "subtitle": "subtitles.entity.wolf.death",
+    "sounds": [
+      "backported_wolves:wolf/angry/death"
+    ]
+  },
+  "big_death": {
+    "subtitle": "subtitles.entity.wolf.death",
+    "sounds": [
+      "backported_wolves:wolf/big/death"
+    ]
+  },
+  "classic_death": {
+    "subtitle": "subtitles.entity.wolf.death",
+    "sounds": [
+      "backported_wolves:wolf/classic/death"
+    ]
+  },
+  "cute_death": {
+    "subtitle": "subtitles.entity.wolf.death",
+    "sounds": [
+      "backported_wolves:wolf/cute/death"
+    ]
+  },
+  "grumpy_death": {
+    "subtitle": "subtitles.entity.wolf.death",
+    "sounds": [
+      "backported_wolves:wolf/grumpy/death"
+    ]
+  },
+  "puglin_death": {
+    "subtitle": "subtitles.entity.wolf.death",
+    "sounds": [
+      "backported_wolves:wolf/puglin/death"
+    ]
+  },
+  "sad_death": {
+    "subtitle": "subtitles.entity.wolf.death",
+    "sounds": [
+      "backported_wolves:wolf/sad/death"
+    ]
+  },
+  "angry_hurt": {
+    "subtitle": "subtitles.entity.wolf.hurt",
+    "sounds": [
+      "backported_wolves:wolf/angry/hurt1",
+      "backported_wolves:wolf/angry/hurt2",
+      "backported_wolves:wolf/angry/hurt3"
+    ]
+  },
+  "big_hurt": {
+    "subtitle": "subtitles.entity.wolf.hurt",
+    "sounds": [
+      "backported_wolves:wolf/big/hurt1",
+      "backported_wolves:wolf/big/hurt2",
+      "backported_wolves:wolf/big/hurt3"
+    ]
+  },
+  "classic_hurt": {
+    "subtitle": "subtitles.entity.wolf.hurt",
+    "sounds": [
+      "backported_wolves:wolf/classic/hurt1",
+      "backported_wolves:wolf/classic/hurt2",
+      "backported_wolves:wolf/classic/hurt3"
+    ]
+  },
+  "cute_hurt": {
+    "subtitle": "subtitles.entity.wolf.hurt",
+    "sounds": [
+      "backported_wolves:wolf/cute/hurt1",
+      "backported_wolves:wolf/cute/hurt2",
+      "backported_wolves:wolf/cute/hurt3"
+    ]
+  },
+  "grumpy_hurt": {
+    "subtitle": "subtitles.entity.wolf.hurt",
+    "sounds": [
+      "backported_wolves:wolf/grumpy/hurt1",
+      "backported_wolves:wolf/grumpy/hurt2",
+      "backported_wolves:wolf/grumpy/hurt3"
+    ]
+  },
+  "puglin_hurt": {
+    "subtitle": "subtitles.entity.wolf.hurt",
+    "sounds": [
+      "backported_wolves:wolf/puglin/hurt1",
+      "backported_wolves:wolf/puglin/hurt2",
+      "backported_wolves:wolf/puglin/hurt3"
+    ]
+  },
+  "sad_hurt": {
+    "subtitle": "subtitles.entity.wolf.hurt",
+    "sounds": [
+      "backported_wolves:wolf/sad/hurt1",
+      "backported_wolves:wolf/sad/hurt2",
+      "backported_wolves:wolf/sad/hurt3"
+    ]
+  },
+  "angry_growl": {
+    "subtitle": "subtitles.entity.wolf.growl",
+    "sounds": [
+      "backported_wolves:wolf/angry/growl1",
+      "backported_wolves:wolf/angry/growl2",
+      "backported_wolves:wolf/angry/growl3"
+    ]
+  },
+  "big_growl": {
+    "subtitle": "subtitles.entity.wolf.growl",
+    "sounds": [
+      "backported_wolves:wolf/big/growl1",
+      "backported_wolves:wolf/big/growl2",
+      "backported_wolves:wolf/big/growl3"
+    ]
+  },
+  "classic_growl": {
+    "subtitle": "subtitles.entity.wolf.growl",
+    "sounds": [
+      "backported_wolves:wolf/classic/growl1",
+      "backported_wolves:wolf/classic/growl2",
+      "backported_wolves:wolf/classic/growl3"
+    ]
+  },
+  "cute_growl": {
+    "subtitle": "subtitles.entity.wolf.growl",
+    "sounds": [
+      "backported_wolves:wolf/cute/growl1",
+      "backported_wolves:wolf/cute/growl2",
+      "backported_wolves:wolf/cute/growl3"
+    ]
+  },
+  "grumpy_growl": {
+    "subtitle": "subtitles.entity.wolf.growl",
+    "sounds": [
+      "backported_wolves:wolf/grumpy/growl1",
+      "backported_wolves:wolf/grumpy/growl2",
+      "backported_wolves:wolf/grumpy/growl3"
+    ]
+  },
+  "puglin_growl": {
+    "subtitle": "subtitles.entity.wolf.growl",
+    "sounds": [
+      "backported_wolves:wolf/puglin/growl1",
+      "backported_wolves:wolf/puglin/growl2",
+      "backported_wolves:wolf/puglin/growl3"
+    ]
+  },
+  "sad_growl": {
+    "subtitle": "subtitles.entity.wolf.growl",
+    "sounds": [
+      "backported_wolves:wolf/sad/growl1",
+      "backported_wolves:wolf/sad/growl2",
+      "backported_wolves:wolf/sad/growl3"
+    ]
+  },
+  "angry_whine": {
+    "subtitle": "subtitles.entity.wolf.whine",
+    "sounds": [
+      "backported_wolves:wolf/angry/whine"
+    ]
+  },
+  "big_whine": {
+    "subtitle": "subtitles.entity.wolf.whine",
+    "sounds": [
+      "backported_wolves:wolf/big/whine"
+    ]
+  },
+  "classic_whine": {
+    "subtitle": "subtitles.entity.wolf.whine",
+    "sounds": [
+      "backported_wolves:wolf/classic/whine"
+    ]
+  },
+  "cute_whine": {
+    "subtitle": "subtitles.entity.wolf.whine",
+    "sounds": [
+      "backported_wolves:wolf/cute/whine"
+    ]
+  },
+  "grumpy_whine": {
+    "subtitle": "subtitles.entity.wolf.whine",
+    "sounds": [
+      "backported_wolves:wolf/grumpy/whine"
+    ]
+  },
+  "puglin_whine": {
+    "subtitle": "subtitles.entity.wolf.whine",
+    "sounds": [
+      "backported_wolves:wolf/puglin/whine"
+    ]
+  },
+  "sad_whine": {
+    "subtitle": "subtitles.entity.wolf.whine",
+    "sounds": [
+      "backported_wolves:wolf/sad/whine"
+    ]
+  }
+}

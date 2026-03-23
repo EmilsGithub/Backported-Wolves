@@ -1,0 +1,35 @@
+modLoader = "javafml"
+loaderVersion = "[46,)"
+#issueTrackerURL = ""
+license = "MIT"
+
+[[mods]]
+modId = "backported_wolves"
+version = "${version}"
+displayName = "Backported Wolves"
+authors = "EmilSG"
+description = '''
+Backports the wolf variants, and sound variants to older versions of the game.
+'''
+logoFile = "assets/backported_wolves/icon.png"
+
+[[dependencies.backported_wolves]]
+modId = "forge"
+mandatory = true
+versionRange = "[46,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.backported_wolves]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20,1.20.5)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.backported_wolves]]
+modId = "architectury"
+mandatory = true
+versionRange = "[9.2.14,)"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "backported_wolves",
+  "version": "${version}",
+  "name": "Backported Wolves",
+  "description": "Backports the wolf variants, and sound variants to older versions of the game.",
+  "authors": [
+    "EmilSG"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "MIT",
+  "icon": "assets/backported_wolves/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.emilsg.fabric.BWFabric"
+    ],
+    "client": [
+      "net.emilsg.fabric.client.BWFabricClient"
+    ]
+  },
+  "mixins": [
+    "backported_wolves.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": [
+      "1.20",
+      "1.20.1",
+      "1.20.2",
+      "1.20.3",
+      "1.20.4"
+    ],
+    "java": ">=17",
+    "architectury": ">=9.2.14",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
