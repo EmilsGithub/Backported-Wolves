@@ -1,7 +1,6 @@
 package net.emilsg.backported_wolves.variant;
 
 import net.emilsg.backported_wolves.sound.ModSoundEvents;
-import net.emilsg.backported_wolves.sound.ModSoundEvents;
 import net.minecraft.sounds.SoundEvent;
 
 import java.util.Arrays;
