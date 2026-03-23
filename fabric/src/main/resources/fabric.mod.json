@@ -8,8 +8,9 @@
     "EmilSG"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://modrinth.com/mod/backported-wolves",
+    "sources": "https://github.com/EmilsGithub/Backported-Wolves",
+    "issues": "https://github.com/EmilsGithub/Backported-Wolves/issues"
   },
   "license": "MIT",
   "icon": "assets/backported_wolves/icon.png",

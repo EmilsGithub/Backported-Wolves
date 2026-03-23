@@ -1,6 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[41,)"
-#issueTrackerURL = ""
+issueTrackerURL = "https://github.com/EmilsGithub/Backported-Wolves/issues"
 license = "MIT"
 
 [[mods]]
