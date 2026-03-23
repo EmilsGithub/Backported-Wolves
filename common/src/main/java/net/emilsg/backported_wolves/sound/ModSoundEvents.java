@@ -3,14 +3,14 @@ package net.emilsg.backported_wolves.sound;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.emilsg.backported_wolves.BackportedWolvesCommon;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
 import java.util.function.Supplier;
 
 public class ModSoundEvents {
-    private static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(BackportedWolvesCommon.MOD_ID, Registries.SOUND_EVENT);
+    private static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(BackportedWolvesCommon.MOD_ID, Registry.SOUND_EVENT_REGISTRY);
 
     public static final Supplier<SoundEvent> ANGRY_PANTING = registerSoundEvents("angry_panting");
     public static final Supplier<SoundEvent> BIG_PANTING = registerSoundEvents("big_panting");
@@ -61,7 +61,7 @@ public class ModSoundEvents {
     public static final Supplier<SoundEvent> SAD_WHINE = registerSoundEvents("sad_whine");
 
     public static RegistrySupplier<SoundEvent> registerSoundEvents(String name) {
-        return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(BackportedWolvesCommon.MOD_ID, name)));
+        return SOUNDS.register(name, () -> new SoundEvent(new ResourceLocation(BackportedWolvesCommon.MOD_ID, name)));
     }
 
     public static void register() {

@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[46,)"
+loaderVersion = "[41,)"
 #issueTrackerURL = ""
 license = "MIT"
 
@@ -16,20 +16,20 @@ logoFile = "assets/backported_wolves/icon.png"
 [[dependencies.backported_wolves]]
 modId = "forge"
 mandatory = true
-versionRange = "[46,)"
+versionRange = "[41,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.backported_wolves]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.20,1.20.5)"
+versionRange = "[1.19,1.19.5)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.backported_wolves]]
 modId = "architectury"
 mandatory = true
-versionRange = "[9.2.14,)"
+versionRange = "[5.14.84,)"
 ordering = "AFTER"
 side = "BOTH"
