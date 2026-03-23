@@ -1,5 +1,6 @@
 package net.emilsg.backported_wolves.mixin;
 
+import net.emilsg.backported_wolves.variant.WolfVariantHolder;
 import net.emilsg.backported_wolves.tags.ModBiomeTags;
 import net.emilsg.backported_wolves.variant.WolfEntityVariant;
 import net.emilsg.backported_wolves.variant.WolfSoundVariant;
@@ -29,151 +30,154 @@ import java.util.List;
 
 
 @Mixin(Wolf.class)
-public abstract class WolfEntityMixin extends MobEntityMixin {
+public abstract class WolfEntityMixin extends MobEntityMixin implements WolfVariantHolder {
 
     @Unique
-    private static final EntityDataAccessor<String> VARIANT = SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.STRING);
-    private static final EntityDataAccessor<String> SOUND_VARIANT = SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<String> VARIANT =
+            SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.STRING);
 
-    @Inject(method = "defineSynchedData", at = @At("HEAD"))
-    public void initTracker (CallbackInfo ci) {
-        Wolf wolfEntity = (Wolf) (Object) this;
-        wolfEntity.getEntityData().define(VARIANT, WolfEntityVariant.PALE_WOLF.getId());
-        wolfEntity.getEntityData().define(SOUND_VARIANT, WolfSoundVariant.CLASSIC.getId());
+    @Unique
+    private static final EntityDataAccessor<String> SOUND_VARIANT =
+            SynchedEntityData.defineId(Wolf.class, EntityDataSerializers.STRING);
+
+    @Inject(method = "defineSynchedData", at = @At("TAIL"))
+    private void defineSynchedData(CallbackInfo ci) {
+        Wolf wolf = (Wolf) (Object) this;
+        wolf.getEntityData().define(VARIANT, WolfEntityVariant.PALE_WOLF.getId());
+        wolf.getEntityData().define(SOUND_VARIANT, WolfSoundVariant.CLASSIC.getId());
     }
 
-    @Inject(method = "addAdditionalSaveData", at = @At("HEAD"))
-    public void writeNBTData (CompoundTag pCompound, CallbackInfo ci) {
-        pCompound.putString("variant", getTypeVariant());
-        pCompound.putString("sound_variant", getSoundTypeVariant());
+    @Inject(method = "addAdditionalSaveData", at = @At("TAIL"))
+    private void writeNBT(CompoundTag tag, CallbackInfo ci) {
+        tag.putString("variant", getVariantId());
+        tag.putString("sound_variant", getSoundVariantId());
     }
 
-    @Inject(method = "readAdditionalSaveData", at = @At("HEAD"))
-    public void readNBTData(CompoundTag pCompound, CallbackInfo ci) {
-        Wolf wolfEntity = (Wolf) (Object) this;
+    @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
+    private void readNBT(CompoundTag tag, CallbackInfo ci) {
+        Wolf wolf = (Wolf) (Object) this;
 
         String variantId = WolfEntityVariant.PALE_WOLF.getId();
 
-        if (pCompound.contains("Variant")) {
-            variantId = migrateOldVariantToNewId(pCompound.getInt("Variant"));
-            pCompound.remove("Variant");
-            pCompound.putString("variant", variantId);
-        } else {
-            variantId = pCompound.getString("variant");
+        if (tag.contains("Variant")) {
+            variantId = migrateOldVariantToNewId(tag.getInt("Variant"));
+        } else if (tag.contains("variant")) {
+            variantId = tag.getString("variant");
         }
 
-        wolfEntity.getEntityData().set(VARIANT, variantId);
+        wolf.getEntityData().set(VARIANT, variantId);
 
-        if (pCompound.contains("sound_variant")) wolfEntity.getEntityData().set(SOUND_VARIANT, pCompound.getString("sound_variant"));
-        else wolfEntity.getEntityData().set(SOUND_VARIANT, WolfSoundVariant.CLASSIC.getId());
-    }
-
-    @Inject(method = "getAmbientSound", at = @At("RETURN"), cancellable = true)
-    public void newAmbientSounds (CallbackInfoReturnable<SoundEvent> cir) {
-        Wolf wolfEntity = (Wolf) (Object) this;
-        WolfSoundVariant soundVariant = WolfSoundVariant.fromId(this.getSoundTypeVariant());
-
-        if (wolfEntity.isAngry()) {
-            cir.setReturnValue(soundVariant.getGrowlSound());
-        } else if (wolfEntity.getRandom().nextInt(3) != 0) {
-            cir.setReturnValue(soundVariant.getBarkSound());
+        if (tag.contains("sound_variant")) {
+            wolf.getEntityData().set(SOUND_VARIANT, tag.getString("sound_variant"));
         } else {
-            cir.setReturnValue(wolfEntity.isTame() && wolfEntity.getHealth() < 10.0F ? soundVariant.getWhineSound() : soundVariant.getPantingSound());
+            wolf.getEntityData().set(SOUND_VARIANT, WolfSoundVariant.CLASSIC.getId());
         }
-    }
-
-    @Inject(method = "getDeathSound", at = @At("RETURN"), cancellable = true)
-    public void newDeathSounds (CallbackInfoReturnable<SoundEvent> cir) {
-        WolfSoundVariant soundVariant = WolfSoundVariant.fromId(this.getSoundTypeVariant());
-        cir.setReturnValue(soundVariant.getDeathSound());
-    }
-
-    @Inject(method = "getHurtSound", at = @At("RETURN"), cancellable = true)
-    public void newHurtSounds (CallbackInfoReturnable<SoundEvent> cir) {
-        WolfSoundVariant soundVariant = WolfSoundVariant.fromId(this.getSoundTypeVariant());
-        cir.setReturnValue(soundVariant.getHurtSound());
     }
 
     @Override
     protected void onInitialize(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, SpawnGroupData pSpawnData, CompoundTag pDataTag, CallbackInfoReturnable<SpawnGroupData> cir) {
-        Wolf wolfEntity = (Wolf) (Object) this;
-        Holder<Biome> registryEntry = pLevel.getBiome(wolfEntity.getOnPos());
+        Wolf wolf = (Wolf) (Object) this;
+        Holder<Biome> biome = pLevel.getBiome(wolf.blockPosition());
 
         List<WolfEntityVariant> matches = new ArrayList<>();
 
-        if (registryEntry.is(ModBiomeTags.SPAWNS_WOODS_WOLF)) matches.add(WolfEntityVariant.WOODS_WOLF);
-        if (registryEntry.is(ModBiomeTags.SPAWNS_ASHEN_WOLF)) matches.add(WolfEntityVariant.ASHEN_WOLF);
-        if (registryEntry.is(ModBiomeTags.SPAWNS_BLACK_WOLF)) matches.add(WolfEntityVariant.BLACK_WOLF);
-        if (registryEntry.is(ModBiomeTags.SPAWNS_CHESTNUT_WOLF)) matches.add(WolfEntityVariant.CHESTNUT_WOLF);
-        if (registryEntry.is(ModBiomeTags.SPAWNS_PALE_WOLF)) matches.add(WolfEntityVariant.PALE_WOLF);
-        if (registryEntry.is(ModBiomeTags.SPAWNS_RUSTY_WOLF)) matches.add(WolfEntityVariant.RUSTY_WOLF);
-        if (registryEntry.is(ModBiomeTags.SPAWNS_SPOTTED_WOLF)) matches.add(WolfEntityVariant.SPOTTED_WOLF);
-        if (registryEntry.is(ModBiomeTags.SPAWNS_STRIPED_WOLF)) matches.add(WolfEntityVariant.STRIPED_WOLF);
-        if (registryEntry.is(ModBiomeTags.SPAWNS_SNOWY_WOLF)) matches.add(WolfEntityVariant.SNOWY_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_WOODS_WOLF)) matches.add(WolfEntityVariant.WOODS_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_ASHEN_WOLF)) matches.add(WolfEntityVariant.ASHEN_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_BLACK_WOLF)) matches.add(WolfEntityVariant.BLACK_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_CHESTNUT_WOLF)) matches.add(WolfEntityVariant.CHESTNUT_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_PALE_WOLF)) matches.add(WolfEntityVariant.PALE_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_RUSTY_WOLF)) matches.add(WolfEntityVariant.RUSTY_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_SPOTTED_WOLF)) matches.add(WolfEntityVariant.SPOTTED_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_STRIPED_WOLF)) matches.add(WolfEntityVariant.STRIPED_WOLF);
+        if (biome.is(ModBiomeTags.SPAWNS_SNOWY_WOLF)) matches.add(WolfEntityVariant.SNOWY_WOLF);
 
         WolfEntityVariant variant = matches.isEmpty()
                 ? WolfEntityVariant.PALE_WOLF
-                : matches.get(wolfEntity.getRandom().nextInt(matches.size()));
+                : matches.get(wolf.getRandom().nextInt(matches.size()));
 
-        this.setVariant(variant);
-        this.setSoundVariant(WolfSoundVariant.getRandom());
+        setVariant(variant);
+        setSoundVariant(WolfSoundVariant.getRandom());
     }
 
     @Inject(
             method = "getBreedOffspring(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/AgeableMob;)Lnet/minecraft/world/entity/animal/Wolf;",
             at = @At("RETURN")
     )
-    private void onCreateChild(ServerLevel pLevel, AgeableMob pOtherParent, CallbackInfoReturnable<Wolf> cir) {
+    private void onCreateChild(ServerLevel serverLevel, AgeableMob otherParent, CallbackInfoReturnable<Wolf> cir) {
         Wolf child = cir.getReturnValue();
         if (child == null) return;
 
-        Wolf wolfEntity = (Wolf) (Object) this;
+        Wolf self = (Wolf) (Object) this;
+        WolfVariantHolder selfData = (WolfVariantHolder) self;
+        WolfVariantHolder otherData = (WolfVariantHolder) otherParent;
+        WolfVariantHolder childData = (WolfVariantHolder) child;
 
-        CompoundTag nbtParent = new CompoundTag();
-        wolfEntity.addAdditionalSaveData(nbtParent);
+        String variant = self.getRandom().nextBoolean()
+                ? selfData.getVariantId()
+                : otherData.getVariantId();
 
-        CompoundTag nbtOtherParent = new CompoundTag();
-        pOtherParent.addAdditionalSaveData(nbtOtherParent);
-
-        String variant = wolfEntity.getRandom().nextBoolean() ? nbtParent.getString("variant") : nbtOtherParent.getString("variant");
-
-        WolfSoundVariant soundVariant = WolfSoundVariant.getRandom();
-
-        child.getEntityData().set(VARIANT, variant);
-        child.getEntityData().set(SOUND_VARIANT, soundVariant.getId());
-
-        CompoundTag childNbt = new CompoundTag();
-        child.addAdditionalSaveData(childNbt);
-        childNbt.putString("variant", variant);
-        childNbt.putString("sound_variant", soundVariant.getId());
-        child.readAdditionalSaveData(childNbt);
+        childData.setVariant(WolfEntityVariant.valueOf(
+                switch (variant) {
+                    case "minecraft:woods" -> "WOODS_WOLF";
+                    case "minecraft:ashen" -> "ASHEN_WOLF";
+                    case "minecraft:black" -> "BLACK_WOLF";
+                    case "minecraft:chestnut" -> "CHESTNUT_WOLF";
+                    case "minecraft:rusty" -> "RUSTY_WOLF";
+                    case "minecraft:spotted" -> "SPOTTED_WOLF";
+                    case "minecraft:striped" -> "STRIPED_WOLF";
+                    case "minecraft:snowy" -> "SNOWY_WOLF";
+                    default -> "PALE_WOLF";
+                }
+        ));
+        childData.setSoundVariant(WolfSoundVariant.getRandom());
     }
 
-    @Unique
-    public String getTypeVariant() {
-        Wolf wolfEntity = (Wolf) (Object) this;
-        return wolfEntity.getEntityData().get(VARIANT);
+    @Inject(method = "getAmbientSound", at = @At("RETURN"), cancellable = true)
+    private void getAmbientSound(CallbackInfoReturnable<SoundEvent> cir) {
+        Wolf wolf = (Wolf) (Object) this;
+        WolfSoundVariant soundVariant = WolfSoundVariant.fromId(getSoundVariantId());
+
+        if (wolf.isAngry()) {
+            cir.setReturnValue(soundVariant.getGrowlSound());
+        } else if (wolf.getRandom().nextInt(3) != 0) {
+            cir.setReturnValue(soundVariant.getBarkSound());
+        } else {
+            cir.setReturnValue(wolf.isTame() && wolf.getHealth() < 10.0F
+                    ? soundVariant.getWhineSound()
+                    : soundVariant.getPantingSound());
+        }
     }
 
-    @Unique
+    @Inject(method = "getDeathSound", at = @At("RETURN"), cancellable = true)
+    private void getDeathSound(CallbackInfoReturnable<SoundEvent> cir) {
+        cir.setReturnValue(WolfSoundVariant.fromId(getSoundVariantId()).getDeathSound());
+    }
+
+    @Inject(method = "getHurtSound", at = @At("RETURN"), cancellable = true)
+    private void getHurtSound(CallbackInfoReturnable<SoundEvent> cir) {
+        cir.setReturnValue(WolfSoundVariant.fromId(getSoundVariantId()).getHurtSound());
+    }
+
+    @Override
+    public String getVariantId() {
+        return ((Wolf) (Object) this).getEntityData().get(VARIANT);
+    }
+
+    @Override
     public void setVariant(WolfEntityVariant variant) {
-        Wolf wolfEntity = (Wolf) (Object) this;
-        wolfEntity.getEntityData().set(VARIANT, variant.getId());
+        ((Wolf) (Object) this).getEntityData().set(VARIANT, variant.getId());
     }
 
-    @Unique
-    public String getSoundTypeVariant() {
-        Wolf wolfEntity = (Wolf) (Object) this;
-        return wolfEntity.getEntityData().get(SOUND_VARIANT);
+    @Override
+    public String getSoundVariantId() {
+        return ((Wolf) (Object) this).getEntityData().get(SOUND_VARIANT);
     }
 
-    @Unique
+    @Override
     public void setSoundVariant(WolfSoundVariant variant) {
-        Wolf wolfEntity = (Wolf) (Object) this;
-        wolfEntity.getEntityData().set(SOUND_VARIANT, variant.getId());
+        ((Wolf) (Object) this).getEntityData().set(SOUND_VARIANT, variant.getId());
     }
 
-    //Fix old stuff:
     @Unique
     private static String migrateOldVariantToNewId(int id) {
         return switch (id & 255) {

@@ -1,6 +1,7 @@
 package net.emilsg.backported_wolves.tags;
 
 import net.emilsg.backported_wolves.BackportedWolvesCommon;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
